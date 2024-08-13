@@ -27,11 +27,11 @@ pipeline
             steps {
                 bat "echo Сообщение из steps"
                 bat "echo переменная envString = ${envString}"
+            
+                script {
+                    scannerHome = tool "sonar-scanner"
+                }
             }
-
-            script {
-                scannerHome = tool "sonar-scanner"
-            }
-        }
+        }    
     }
 }
