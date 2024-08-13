@@ -24,10 +24,9 @@ pipeline
     }
     stages {
         stage("stage") {
-            steps {
-                bat "chcp 1251"
-                bat "echo Сообщение из steps"
-                bat "echo переменная envString = ${envString}"
+            steps {                
+                bat "echo Messages from steps"
+                bat "echo envString = ${envString}"
             
                 script {
                     scannerHome = tool "sonar-scanner"
