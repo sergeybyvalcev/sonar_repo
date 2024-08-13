@@ -25,6 +25,7 @@ pipeline
     stages {
         stage("stage") {
             steps {
+                bat "chcp 1251"
                 bat "echo Сообщение из steps"
                 bat "echo переменная envString = ${envString}"
             
