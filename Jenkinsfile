@@ -60,7 +60,7 @@ pipeline
                 }                
             }
         } 
-         stage("vanessa") {
+        stage("Sonar") {
             steps {
                 script {
                     scannerHome = tool 'sonar-scanner'
