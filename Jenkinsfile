@@ -23,14 +23,9 @@ pipeline
 
     }
     stages {
-        stage("stage") {
+        stage("Build test base") {
             steps {                
-                bat "echo Messages from steps"
-                bat "echo envString = ${envString}"
-            
-                script {
-                    scannerHome = tool "sonar-scanner"
-                }
+                bat "chcp 1251\n vrunner init-dev --dt C:\jenkins\template\dev.dt --db-user Teacher --src C:\repo\sonar_repo\src"                
             }
         }    
     }
