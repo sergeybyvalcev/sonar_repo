@@ -48,7 +48,7 @@ pipeline
                 }                
             }
         } 
-         stage("vanessa") {
+        stage("vanessa") {
             steps {
                 script {
                     try {
@@ -58,6 +58,17 @@ pipeline
                         currentBuild.result = 'UNSTABLE'
                     }
                 }                
+            }
+        }
+        stage("sonar") {
+            steps {
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+
+                } 
+                withSonarQubeEnv("sonar") {
+                    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=sonar-token -D sonar.projectVersion=${BUILD_ID}"
+                }                   
             }
         }       
     }
