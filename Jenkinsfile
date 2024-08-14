@@ -34,8 +34,8 @@ pipeline
                 //withSonarQubeEnv("sonar") {
                 //    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=sqp_6cf38cd50ccb930822ff8064595029c8c08dabe0 -D sonar.projectVersion=${BUILD_ID}"
                 //} 
-                def scannerHome = tool 'sonar-scanner';
-                withSonarQubeEnv() {
+                scannerHome = tool 'sonar-scanner';
+                withSonarQubeEnv(credentialsId: '27789cb6-3487-4196-ae8e-68cd0652f758') {
                     bat "${scannerHome}/bin/sonar-scanner"
                    }                  
             }
