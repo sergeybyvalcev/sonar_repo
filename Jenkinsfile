@@ -35,7 +35,9 @@ pipeline
                 //    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=sqp_6cf38cd50ccb930822ff8064595029c8c08dabe0 -D sonar.projectVersion=${BUILD_ID}"
                 //} 
                 //credentialsId: '27789cb6-3487-4196-ae8e-68cd0652f758'
-                scannerHome = tool 'sonar-scanner'
+                script {
+                    scannerHome = tool 'sonar-scanner'
+                }
                 withSonarQubeEnv("sonar") {
                     bat "${scannerHome}/bin/sonar-scanner"
                 }                  
