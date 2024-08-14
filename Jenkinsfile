@@ -33,7 +33,7 @@ pipeline
 
                 } 
                 withSonarQubeEnv("sonar") {
-                    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=squ_5e2becf559f1d3a7feb8d8de4b06904b24ad2507 -D sonar.projectVersion=${BUILD_ID}"
+                    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=sqp_6cf38cd50ccb930822ff8064595029c8c08dabe0 -D sonar.projectVersion=${BUILD_ID}"
                 }                   
             }
         }       
