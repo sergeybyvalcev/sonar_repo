@@ -25,23 +25,51 @@ pipeline
         }
 
     }
-    stages {        
-        stage("sonar") {
+    stages {
+        stage("Build test base") {
+            steps {                
+                bat "chcp 65001\n vrunner init-dev --dt C:\\jenkins\\template\\dev.dt --db-user Teacher --src C:\\repo\\sonar_repo\\src"
+            }
+        }
+        stage("Syntax check") {
             steps {
-                //script {
-                //    scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                //} 
-                //withSonarQubeEnv("sonar") {
-                //    bat "${scannerHome}/bin/sonar-scanner -D sonar.login=sqp_6cf38cd50ccb930822ff8064595029c8c08dabe0 -D sonar.projectVersion=${BUILD_ID}"
-                //} 
-                //credentialsId: '27789cb6-3487-4196-ae8e-68cd0652f758'
+                bat "chcp 65001\n vrunner syntax-check" 
+            }
+        }
+        stage("Smoke tests") {
+            steps {
+                script {
+                    try {
+                        bat "chcp 65001\n runner xunit"
+                    }
+                    catch(Exception Exc) {
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }                
+            }
+        } 
+        stage("vanessa") {
+            steps {
+                script {
+                    try {
+                        bat "chcp 65001\n runner vanessa"
+                    }
+                    catch(Exception Exc) {
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }                
+            }
+        } 
+         stage("vanessa") {
+            steps {
                 script {
                     scannerHome = tool 'sonar-scanner'
+                } 
+                withSonarQubeEnv ("sonar") {
+                    bat "chcp 65001\n ${scannerHome}/bin/sonar-scanner -D sonar.login=sqa_5cf1a71373b38e4701c520a21ca45799bf21599f"
                 }
-                withSonarQubeEnv("sonar") {
-                    bat "chcp 65001\n ${scannerHome}/bin/sonar-scanner -D sonar.login=sqa_e6305ba0d8d1454bdbc71acf8078e1a4dc461ee9"
-                }                  
             }
-        }       
+         }
+         
     }
 }
