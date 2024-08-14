@@ -10,9 +10,10 @@ pipeline
 
     post {
         always {
-            allure includeProperties: false, jdk: '', results: [[path: 'out/syntax-check/allure'], [path: 'out/smoke/allure/']]
+            allure includeProperties: false, jdk: '', results: [[path: 'out/syntax-check/allure'], [path: 'out/smoke/allure/'], [path: 'build/reports/allurereport']]
             junit allowEmptyResults: true, stdioRetention: '', testResults: 'out/syntax-check/junit/junit.xml'
             junit allowEmptyResults: true, stdioRetention: '', testResults: 'out/smoke/junit/*.xml'
+            junit allowEmptyResults: true, stdioRetention: '', testResults: 'build/reports/junitreport/*.xml'
         }
 
         failure {
@@ -40,6 +41,18 @@ pipeline
                 script {
                     try {
                         bat "chcp 65001\n runner xunit"
+                    }
+                    catch(Exception Exc) {
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }                
+            }
+        } 
+         stage("vanessa") {
+            steps {
+                script {
+                    try {
+                        bat "chcp 65001\n runner vanessa"
                     }
                     catch(Exception Exc) {
                         currentBuild.result = 'UNSTABLE'
